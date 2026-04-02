@@ -1,0 +1,38 @@
+.budget-summary {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.budget-card {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.budget-label {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.budget-amount {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.budget-amount.paid {
+  color: var(--sage-dark);
+}
+
+.budget-amount.remaining {
+  color: #c0392b;
+}

@@ -1,0 +1,142 @@
+:root {
+  --sage:        #6b8f6b;
+  --sage-light:  #eaf1ea;
+  --sage-dark:   #4a6b4a;
+  --text:        #2b3328;
+  --text-light:  #6b7c68;
+  --bg:          #f5f7f4;
+  --white:       #ffffff;
+  --border:      #d8e4d6;
+  --radius:      8px;
+  --font:        'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Formulaires */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+input, select {
+  flex: 1 1 180px;
+  padding: 9px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input:focus, select:focus {
+  border-color: var(--sage);
+  background: var(--white);
+}
+
+input::placeholder {
+  color: var(--text-light);
+}
+
+/* Boutons */
+button {
+  padding: 9px 18px;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+button[type="submit"] {
+  background: var(--sage);
+  color: var(--white);
+}
+
+button[type="submit"]:hover {
+  opacity: 0.85;
+}
+
+button:not([type="submit"]) {
+  background: transparent;
+  color: var(--text-light);
+  border: 1px solid var(--border);
+}
+
+button:not([type="submit"]):hover {
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  border-color: var(--sage);
+}
+
+/* Liste */
+ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+li {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+}
+
+li strong {
+  color: var(--text);
+}
+
+li span {
+  color: var(--text-light);
+  font-size: 0.88rem;
+}
+
+li button {
+  margin-left: auto;
+  flex-shrink: 0;
+}
