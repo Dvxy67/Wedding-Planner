@@ -138,7 +138,7 @@ VITE_API_URL=http://localhost:5001/api
 ![Prestataires](./screenshots/prestataires.png)
 
 ### MongoDB Compass — Vue générale
-![MongoDB Vue générale](./screenshots/mongodb_vue_générale.png)
+![MongoDB Vue générale](./screenshots/mongodb_vue_generale.png)
 
 ### MongoDB Compass — Collection invités
 ![MongoDB Invités](./screenshots/mongodb_guest.png)
