@@ -4,6 +4,7 @@ import WeddingsPage from './pages/WeddingsPage'
 import GuestsPage from './pages/GuestsPage'
 import VendorsPage from './pages/VendorsPage'
 import BudgetPage from './pages/BudgetPage'
+import TaskList from './pages/TaskList'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import './App.css'
@@ -26,6 +27,7 @@ function AppContent() {
             <NavLink to="/guests">Invités</NavLink>
             <NavLink to="/vendors">Prestataires</NavLink>
             <NavLink to="/budget">Budget</NavLink>
+            <NavLink to="/tasks">Tâches</NavLink>
             <span className="nav-user">Bonjour, {user.name}</span>
             <button onClick={logout} className="nav-logout">Déconnexion</button>
           </>
@@ -47,6 +49,7 @@ function AppContent() {
         <Route path="/guests" element={<PrivateRoute><GuestsPage /></PrivateRoute>} />
         <Route path="/vendors" element={<PrivateRoute><VendorsPage /></PrivateRoute>} />
         <Route path="/budget" element={<PrivateRoute><BudgetPage /></PrivateRoute>} />
+        <Route path="/tasks" element={<PrivateRoute><TaskList /></PrivateRoute>} />
       </Routes>
     </>
   )

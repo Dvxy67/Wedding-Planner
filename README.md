@@ -1,5 +1,7 @@
 # Wedding Planner — Application MERN
 
+> **Note :** La rédaction de ce README a été assistée par une IA (Claude), ce qui m'a permis de gagner du temps sur la documentation et de me concentrer sur l'implémentation du code.
+
 ## Objectif du projet
 
 Application web full-stack de gestion de mariages permettant de gérer les mariages, les invités, les prestataires et le budget. L'accès à l'application est sécurisé par une authentification JWT (inscription / connexion).
@@ -26,13 +28,15 @@ wedding_planner-main/
 │   ├── Wedding.js             # Schéma mariage (nom, date, lieu)
 │   ├── Guest.js               # Schéma invité (nom, statut, weddingId)
 │   ├── Vendor.js              # Schéma prestataire (nom, type, contact, weddingId)
-│   └── Budget.js              # Schéma budget (titre, montant, payé)
+│   ├── Budget.js              # Schéma budget (titre, montant, payé)
+│   └── Task.js                # Schéma tâche (titre, description, statut, mariage)
 ├── routes/
 │   ├── authRoutes.js          # POST /api/auth/register et /api/auth/login
 │   ├── weddingRoutes.js       # CRUD /api/weddings (protégé)
 │   ├── guestRoutes.js         # CRUD /api/guests (protégé)
 │   ├── vendorRoutes.js        # CRUD /api/vendors (protégé)
-│   └── budgetRoutes.js        # CRUD /api/budgets (protégé)
+│   ├── budgetRoutes.js        # CRUD /api/budgets (protégé)
+│   └── taskRoutes.js          # CRUD /api/tasks (protégé)
 ├── middleware/
 │   └── auth.js                # Middleware JWT — vérifie le token Bearer
 └── client/                    # Frontend React (Vite)
@@ -47,7 +51,8 @@ wedding_planner-main/
             ├── WeddingsPage.jsx
             ├── GuestsPage.jsx
             ├── VendorsPage.jsx
-            └── BudgetPage.jsx
+            ├── BudgetPage.jsx
+            └── TaskList.jsx       # Gestion des tâches (CRUD, liées à un mariage)
 ```
 
 ---
@@ -94,6 +99,10 @@ VITE_API_URL=http://localhost:5001/api
 | POST | `/api/budgets` | Ajouter une dépense |
 | PUT | `/api/budgets/:id` | Marquer comme payé/non payé |
 | DELETE | `/api/budgets/:id` | Supprimer une dépense |
+| GET | `/api/tasks` | Lister toutes les tâches (avec mariage associé) |
+| POST | `/api/tasks` | Créer une tâche (title, description, status, wedding) |
+| PUT | `/api/tasks/:id` | Modifier une tâche |
+| DELETE | `/api/tasks/:id` | Supprimer une tâche |
 
 ---
 
@@ -113,6 +122,38 @@ VITE_API_URL=http://localhost:5001/api
 ### Stockage des données (MongoDB)
 - Les données sont stockées dans la base `wedding_planner` via Mongoose.
 - Les **invités** (`Guest`) et **prestataires** (`Vendor`) contiennent un champ `weddingId` (référence `ObjectId` vers un mariage) pour lier l'entité à un mariage spécifique.
+
+### Gestion des tâches (To-Do List)
+
+La fonctionnalité **Tasks** permet à un utilisateur connecté de gérer une liste de tâches liées à un mariage existant.
+
+**Modèle (`models/Task.js`) :**
+| Champ | Type | Détail |
+|-------|------|--------|
+| `title` | String | Obligatoire |
+| `description` | String | Optionnel |
+| `status` | String | `'à faire'` / `'en cours'` / `'terminé'` (défaut : `'à faire'`) |
+| `wedding` | ObjectId | Référence vers un mariage (obligatoire) |
+
+**Routes (`/api/tasks`, protégées JWT) :**
+- `GET /api/tasks` — liste toutes les tâches avec le mariage populé
+- `POST /api/tasks` — crée une tâche (body : `title`, `description`, `status`, `wedding`)
+- `PUT /api/tasks/:id` — met à jour une tâche existante
+- `DELETE /api/tasks/:id` — supprime une tâche
+
+**Frontend (`src/pages/TaskList.jsx`) :**
+- Formulaire d'ajout (titre, description, statut, sélection du mariage)
+- Liste des tâches avec édition inline et suppression
+- Accessible via le lien **Tâches** dans la navbar (route `/tasks`)
+
+**Fichiers modifiés ou créés :**
+- `models/Task.js` *(nouveau)*
+- `routes/taskRoutes.js` *(nouveau)*
+- `server.js` — ajout de la ligne `app.use('/api/tasks', authMiddleware, require('./routes/taskRoutes'))`
+- `client/src/pages/TaskList.jsx` *(nouveau)*
+- `client/src/App.jsx` — ajout de l'import, du lien navbar et de la route `/tasks`
+
+---
 
 ### Liaison des entités
 - Lors de l'ajout d'un invité ou d'un prestataire, un menu déroulant permet de sélectionner le mariage auquel il est rattaché.
@@ -142,3 +183,28 @@ VITE_API_URL=http://localhost:5001/api
 
 ### MongoDB Compass — Collection invités
 ![MongoDB Invités](./screenshots/mongodb_guest.png)
+
+---
+
+## Captures d'écran — Fonctionnalité Tâches
+
+### Page Tâches (frontend)
+![Page tâches](./screenshots/page_tache.png)
+
+### Authentification Insomnia (login)
+![Authentification Insomnia](./screenshots/authentification_insomnia.png)
+
+### Création d'une tâche — POST /api/tasks (Insomnia)
+![Création tâche Insomnia](./screenshots/creation_tache_insomnia.png)
+
+### Liste des tâches — GET /api/tasks (Insomnia)
+![Liste tâches Insomnia](./screenshots/liste_des_taches_insomnia.png)
+
+### Modification d'une tâche — PUT /api/tasks/:id (Insomnia)
+![Modifier tâche Insomnia](./screenshots/modifier_statut_tache_insomnia.png)
+
+### Suppression d'une tâche — DELETE /api/tasks/:id (Insomnia)
+![Supprimer tâche Insomnia](./screenshots/suprimmer_insomnia.png)
+
+### MongoDB Compass — Collection tasks
+![MongoDB tâches](./screenshots/mongodb_tache.png)

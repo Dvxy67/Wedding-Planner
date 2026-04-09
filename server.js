@@ -24,6 +24,7 @@ app.use('/api/weddings', authMiddleware, require('./routes/weddingRoutes'));
 app.use('/api/guests', authMiddleware, require('./routes/guestRoutes'));
 app.use('/api/vendors', authMiddleware, require('./routes/vendorRoutes'));
 app.use('/api/budgets', authMiddleware, require('./routes/budgetRoutes'));
+app.use('/api/tasks', authMiddleware, require('./routes/taskRoutes'));
 
 // Lancement du serveur
 const PORT = process.env.PORT || 5000;
